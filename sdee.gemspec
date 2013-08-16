@@ -7,4 +7,5 @@ Gem::Specification.new do |s|
   s.email         = 'jamil@elbii.com'
   s.files         = ['lib/sdee.rb', 'example.rb']
   s.homepage      = 'https://github.com/elbii/ruby-sdee'
+  s.licenses      = ['GPL-2']
 end

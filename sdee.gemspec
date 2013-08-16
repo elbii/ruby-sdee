@@ -8,4 +8,5 @@ Gem::Specification.new do |s|
   s.files         = ['lib/sdee.rb', 'example.rb']
   s.homepage      = 'https://github.com/elbii/ruby-sdee'
   s.licenses      = ['GPL-2']
+  s.add_runtime_dependency 'nokogiri', '~> 1.5.0', '>= 1.5.0'
 end

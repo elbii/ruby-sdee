@@ -123,7 +123,7 @@ class SDEE
     response
   end
 
-  def poll_events(sleep_time=1)
+  def poll_events(sleep_time=5)
     while true do
       get_events
       sleep sleep_time
@@ -146,12 +146,11 @@ class SDEE
     doc = Nokogiri::XML(res.body)
 
     xml_alerts = doc.xpath("//sd:evIdsAlert")
+    hash_alerts = xml_alerts.collect {|x| Alert.new(x).to_hash }.uniq
 
-    xml_alerts.each do |xml_alert|
-      puts Alert.new(xml_alert).to_json
-    end
+    hash_alerts.each {|h| puts h.to_json }
 
-    xml_alerts
+    hash_alerts
   end
 
   def request(params)

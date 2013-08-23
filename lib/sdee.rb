@@ -22,7 +22,7 @@ class Alert
     vars = {}
 
     instance_variables.reject {|var| var == :@doc }.each do |var|
-      vars["ids.#{var.to_s[1..-1]}"] = instance_variable_get(var)
+      vars[var.to_s[1..-1]] = instance_variable_get(var)
     end
 
     vars

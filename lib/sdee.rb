@@ -80,13 +80,13 @@ class Alert
 
       target_addr = target.xpath('//sd:addr').first
 
-      data['ids.target'] = target_addr.text
-      data['ids.target_locality'] = target_addr.attribute('locality').value
+      data['target'] = target_addr.text
+      data['target_locality'] = target_addr.attribute('locality').value
 
       begin
-        data['ids.target_port'] = target.xpath('//sd:port').first.text
+        data['target_port'] = target.xpath('//sd:port').first.text
       rescue
-        data['ids.target_port'] = '0'
+        data['target_port'] = '0'
       end
 
       @targets << data

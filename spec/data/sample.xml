@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<env:Envelope xmlns="http://www.cisco.com/cids/2006/08/cidee" xmlns:env="http://www.w3.org/2003/05/soap-envelope" xmlns:sd="http://example.org/2003/08/sdee" xmlns:cid="http://www.cisco.com/cids/2006/08/cidee">
+  <env:Header>
+    <sd:oobInfo>
+      <sd:sessionId>5e5885fc07977bd48ea352344c7230de</sd:sessionId>
+    </sd:oobInfo>
+  </env:Header>
+  <env:Body>
+    <sd:events>
+      <sd:evIdsAlert eventId="6823242457034" vendor="Cisco" severity="informational">
+        <sd:originator>
+          <sd:hostId>sample_host</sd:hostId>
+          <cid:appName>sensorApp</cid:appName>
+          <cid:appInstanceId>27807</cid:appInstanceId>
+        </sd:originator>
+        <sd:time offset="0" timeZone="UTC">1385965224300024000</sd:time>
+        <sd:signature description="IP Fragment Incomplete Datagram" id="1208" cid:version="S212" cid:type="anomaly" cid:created="20030801">
+          <cid:subsigId>0</cid:subsigId>
+          <cid:sigDetails>Fragmented IP Datagram with fragments missing</cid:sigDetails>
+        </sd:signature>
+        <sd:interfaceGroup>vs0</sd:interfaceGroup>
+        <sd:vlan>0</sd:vlan>
+        <sd:participants>
+          <sd:attacker>
+            <sd:addr cid:locality="OUT">0.0.0.0</sd:addr>
+          </sd:attacker>
+          <sd:target>
+            <sd:addr cid:locality="OUT">0.0.0.0</sd:addr>
+            <cid:os idSource="unknown" type="unknown" relevance="unknown"/>
+          </sd:target>
+        </sd:participants>
+        <sd:actions>
+          <cid:denyPacketRequestedNotPerformed>true</cid:denyPacketRequestedNotPerformed>
+        </sd:actions>
+        <cid:riskRatingValue targetValueRating="medium">15</cid:riskRatingValue>
+        <cid:threatRatingValue>15</cid:threatRatingValue>
+        <cid:interface>Unknown</cid:interface>
+        <cid:protocol>IP protocol 0</cid:protocol>
+      </sd:evIdsAlert>
+      <evStatus eventId="6823242457035" vendor="Cisco">
+        <originator>
+          <hostId>sample_host</hostId>
+          <appName>cidwebserver</appName>
+          <appInstanceId>27425</appInstanceId>
+        </originator>
+        <time offset="0" timeZone="UTC">1385965228211631000</time>
+        <loginAction action="loggedIn">
+          <description>User logged into HTTP server</description>
+          <userName>admin</userName>
+          <userAddress port="59344">192.168.1.1</userAddress>
+        </loginAction>
+      </evStatus>
+      <sd:evIdsAlert eventId="6823242457036" vendor="Cisco" severity="high" cid:alarmTraits="32768">
+        <sd:originator>
+          <sd:hostId>sample_host</sd:hostId>
+          <cid:appName>sensorApp</cid:appName>
+          <cid:appInstanceId>27807</cid:appInstanceId>
+        </sd:originator>
+        <sd:time offset="0" timeZone="UTC">1385965230914381000</sd:time>
+        <sd:signature description="TCP Hijack" id="3250" cid:version="S739" cid:type="anomaly" cid:created="20010202">
+          <cid:subsigId>0</cid:subsigId>
+          <cid:sigDetails>TCP Hijack</cid:sigDetails>
+        </sd:signature>
+        <sd:interfaceGroup>vs0</sd:interfaceGroup>
+        <sd:vlan>0</sd:vlan>
+        <sd:participants>
+          <sd:attacker>
+            <sd:addr cid:locality="OUT">10.0.0.2</sd:addr>
+            <sd:port>59433</sd:port>
+          </sd:attacker>
+          <sd:target>
+            <sd:addr cid:locality="OUT">10.1.0.8</sd:addr>
+            <sd:port>443</sd:port>
+            <cid:os idSource="unknown" type="unknown" relevance="relevant"/>
+          </sd:target>
+        </sd:participants>
+        <sd:actions>
+          <cid:denyPacketRequestedNotPerformed>true</cid:denyPacketRequestedNotPerformed>
+        </sd:actions>
+        <cid:riskRatingValue targetValueRating="medium" attackRelevanceRating="relevant">100</cid:riskRatingValue>
+        <cid:threatRatingValue>100</cid:threatRatingValue>
+        <cid:interface>te0_0</cid:interface>
+        <cid:protocol>tcp</cid:protocol>
+      </sd:evIdsAlert>
+    </sd:events>
+  </env:Body>
+</env:Envelope>

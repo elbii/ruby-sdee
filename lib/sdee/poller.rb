@@ -6,12 +6,20 @@ require 'nokogiri'
 
 module SDEE
   class Poller
-    def initialize(options = {})
-      @host = options[:host]
-      @path = '/cgi-bin/sdee-server'
-      @proto = 'https://'
 
-      @creds = Base64.encode64("#{options[:user]}:#{options[:pass]}")
+    attr_accessor :authenticated, :host, :path, :scheme, :user, :password,
+      :base64_credentials, :verify_ssl, :ssl_version
+
+    def initialize(options = {})
+      @host = options[:host] || 'localhost'
+      @path = options[:path] || '/cgi-bin/sdee-server'
+      @scheme = options[:scheme] || 'https://'
+      @user = options[:user]
+      @password = options[:password]
+      @verify_ssl = options[:verify_ssl]
+      @ssl_version = options[:ssl_version] || :SSLv3
+
+      @base64_credentials = Base64.encode64("#{@user}:#{@pass}")
     end
 
     def login
@@ -34,15 +42,15 @@ module SDEE
       response
     end
 
-    def poll_events(sleep_time=5)
+    def poll(sleep_time=5)
       while true do
-        get_events
+        puts get_events
         sleep sleep_time
       end
     end
 
     def get_events
-      puts "Please login first" unless @subscription_id
+      login unless @subscription_id
 
       params = {
         action: 'get',
@@ -53,28 +61,21 @@ module SDEE
         sessionId: @session_id
       }
 
-      res = request params
-      doc = Nokogiri::XML(res.body)
-
-      xml_alerts = doc.xpath("//sd:evIdsAlert")
-      hash_alerts = xml_alerts.collect {|x| Alert.new(x.to_s).to_hash }.uniq
-
-      hash_alerts.each {|h| puts h.to_json }
-
-      hash_alerts
+      doc = Nokogiri::XML(request(params).body)
+      doc.xpath("//sd:evIdsAlert").collect {|x| Alert.new(x).to_hash }.uniq
     end
 
     def request(params)
       http = Net::HTTP.new(@host, 443)
       http.use_ssl = true
-      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-      http.ssl_version = :SSLv3
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE unless @verify_ssl
+      http.ssl_version = @ssl_version
 
-      uri = URI(@proto + @host + @path)
+      uri = URI(@scheme + @host + @path)
       uri.query = URI.encode_www_form(params)
 
       req = Net::HTTP::Get.new(uri)
-      req['Authorization'] = "BASIC #{@creds}"
+      req['Authorization'] = "BASIC #{@base64_credentials}"
 
       http.request(req)
     end

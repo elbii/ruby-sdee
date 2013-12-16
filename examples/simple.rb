@@ -1,13 +1,13 @@
-require 'sdee'
+$LOAD_PATH << './lib'
+require './lib/sdee'
 
 # create new SDEE connection
-poller = SDEE::Poller.new(
+client = SDEE::Client.new(
   host: 'localhost',
   user: 'user',
   password: 'pass')
 
-# login and set subscriptionId, sessionId
-poller.login
+puts "client initialized"
 
-# print events every 1 second in JSON format
-poller.poll_events 1
+# start polling
+client.start_polling

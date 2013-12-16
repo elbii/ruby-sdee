@@ -6,9 +6,8 @@ require 'nokogiri'
 
 module SDEE
   class Poller
-
     attr_accessor :authenticated, :host, :path, :scheme, :user, :password,
-      :base64_credentials, :verify_ssl, :ssl_version
+      :verify_ssl, :ssl_version
 
     def initialize(options = {})
       @host = options[:host] || 'localhost'
@@ -18,8 +17,6 @@ module SDEE
       @password = options[:password]
       @verify_ssl = options[:verify_ssl]
       @ssl_version = options[:ssl_version] || :SSLv3
-
-      @base64_credentials = Base64.encode64("#{@user}:#{@pass}")
     end
 
     def login
@@ -75,7 +72,7 @@ module SDEE
       uri.query = URI.encode_www_form(params)
 
       req = Net::HTTP::Get.new(uri)
-      req['Authorization'] = "BASIC #{@base64_credentials}"
+      req.basic_auth @user, @password
 
       http.request(req)
     end

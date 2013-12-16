@@ -3,6 +3,5 @@ require 'json'
 
 module SDEE
   class Event
-
   end
 end
